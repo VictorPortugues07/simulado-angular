@@ -1,0 +1,17 @@
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.btn-group {
+  .btn {
+    flex: 1;
+  }
+}
+
+.table-responsive {
+  max-height: 500px;
+  overflow-y: auto;
+}

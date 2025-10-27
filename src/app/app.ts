@@ -13,11 +13,13 @@ import { Jogador } from './models/jogador';
   styleUrl: './app.scss',
 })
 export class App {
-  textoBusca: string = '';
+  textoBusca = '';
   posicoesSelecionadas: string[] = [];
   jogadoresEscalados: Jogador[] = [];
 
-  jogadores: Jogador[] = [
+  posicoes = ['GOL', 'ATA', 'LAT', 'MEI', 'ZAG'];
+
+  jogadores = [
     new Jogador('Adriano', 41, 10, 'ATA', 'adriano.jpg'),
     new Jogador('Ronaldo', 45, 9, 'ATA', 'ronaldo.jpg'),
     new Jogador('Cristiano Ronaldo', 39, 7, 'ATA', 'cr7.jpg'),
@@ -38,23 +40,19 @@ export class App {
     new Jogador('Maradona', 63, 10, 'MEI', 'maradona.jpg'),
   ];
 
-  posicoes: string[] = ['GOL', 'ATA', 'LAT', 'MEI', 'ZAG'];
-
   togglePosicao(posicao: string) {
-    if (this.posicoesSelecionadas.includes(posicao)) {
-      this.posicoesSelecionadas = this.posicoesSelecionadas.filter(
-        (p) => p !== posicao
-      );
-    } else {
-      this.posicoesSelecionadas.push(posicao);
-    }
+    const selecionada = this.posicoesSelecionadas.includes(posicao);
+    this.posicoesSelecionadas = selecionada
+      ? this.posicoesSelecionadas.filter((p) => p !== posicao)
+      : [...this.posicoesSelecionadas, posicao];
   }
 
   buscarJogadores(): Jogador[] {
+    const busca = this.textoBusca.toLowerCase();
+
     return this.jogadores.filter((jogador) => {
       const passaNome =
-        this.textoBusca === '' ||
-        jogador.nome.toLowerCase().includes(this.textoBusca.toLowerCase());
+        !this.textoBusca || jogador.nome.toLowerCase().includes(busca);
 
       const passaPosicao =
         this.posicoesSelecionadas.length === 0 ||

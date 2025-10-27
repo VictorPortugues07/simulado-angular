@@ -1,17 +1,11 @@
-.cards-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding: 20px 0;
+.form-check-inline {
+  margin-right: 15px;
 }
 
-.btn-group {
-  .btn {
-    flex: 1;
-  }
+.table {
+  margin-bottom: 10px;
 }
 
-.table-responsive {
-  max-height: 500px;
-  overflow-y: auto;
+.card-header h5 {
+  margin: 0;
 }

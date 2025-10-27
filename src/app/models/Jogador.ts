@@ -1,10 +1,9 @@
-export interface Jogador {
-  id: number;
-  nome: string;
-  nomeCurto: string;
-  idade: number;
-  numero: number;
-  posicao: string;
-  time: string;
-  imagem: string;
+export class Jogador {
+  constructor(
+    public nome: string,
+    public idade: number,
+    public numero: number,
+    public posicao: string,
+    public imagem: string
+  ) {}
 }

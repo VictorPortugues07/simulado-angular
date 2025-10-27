@@ -13,118 +13,66 @@ import { Jogador } from './models/jogador';
   styleUrl: './app.scss',
 })
 export class App {
-  protected title = 'simulado-angular';
-
-  // Variável para o campo de busca
   textoBusca: string = '';
-
-  // Posição selecionada
-  posicaoSelecionada: string = 'GOL';
-
-  // Lista de jogadores escalados (vai aparecer na tabela)
+  posicoesSelecionadas: string[] = [];
   jogadoresEscalados: Jogador[] = [];
 
-  // Lista de todos os jogadores disponíveis
-  todosJogadores: Jogador[] = [
-    {
-      id: 1,
-      nome: 'Oliver Kahn',
-      nomeCurto: 'Kahn',
-      idade: 56,
-      numero: 1,
-      posicao: 'GOL',
-      time: 'KARLSRUHER SC',
-      imagem: 'https://via.placeholder.com/250x260/1fa43f/ffffff?text=Kahn',
-    },
-    {
-      id: 2,
-      nome: 'Adriano Silva',
-      nomeCurto: 'Adriano',
-      idade: 28,
-      numero: 10,
-      posicao: 'ATA',
-      time: 'FC BARCELONA',
-      imagem: 'https://via.placeholder.com/250x260/2e8fde/ffffff?text=Adriano',
-    },
-    {
-      id: 3,
-      nome: 'Carlos Costa',
-      nomeCurto: 'Costa',
-      idade: 25,
-      numero: 2,
-      posicao: 'LAT',
-      time: 'REAL MADRID',
-      imagem: 'https://via.placeholder.com/250x260/ff6b6b/ffffff?text=Costa',
-    },
-    {
-      id: 4,
-      nome: 'João Oliveira',
-      nomeCurto: 'João',
-      idade: 30,
-      numero: 8,
-      posicao: 'MEI',
-      time: 'JUVENTUS',
-      imagem: 'https://via.placeholder.com/250x260/ffd93d/000000?text=João',
-    },
-    {
-      id: 5,
-      nome: 'Pedro Santos',
-      nomeCurto: 'Pedro',
-      idade: 27,
-      numero: 4,
-      posicao: 'ZAG',
-      time: 'BAYERN',
-      imagem: 'https://via.placeholder.com/250x260/6bcf7f/ffffff?text=Pedro',
-    },
-    {
-      id: 6,
-      nome: 'Manuel Neuer',
-      nomeCurto: 'Neuer',
-      idade: 38,
-      numero: 1,
-      posicao: 'GOL',
-      time: 'BAYERN',
-      imagem: 'https://via.placeholder.com/250x260/1fa43f/ffffff?text=Neuer',
-    },
+  jogadores: Jogador[] = [
+    new Jogador('Adriano', 41, 10, 'ATA', 'adriano.jpg'),
+    new Jogador('Ronaldo', 45, 9, 'ATA', 'ronaldo.jpg'),
+    new Jogador('Cristiano Ronaldo', 39, 7, 'ATA', 'cr7.jpg'),
+    new Jogador('Balotelli', 34, 45, 'ATA', 'balotelli.jpg'),
+    new Jogador('Seedorf', 48, 10, 'MEI', 'seedorf.jpg'),
+    new Jogador('Renato', 44, 8, 'MEI', 'renato.jpg'),
+    new Jogador('O Bruxo', 45, 10, 'MEI', 'bruxo.jpg'),
+    new Jogador('Bebeto', 59, 20, 'ATA', 'bebeto.jpg'),
+    new Jogador('Freky', 27, 13, 'ATA', 'freky.avif'),
+    new Jogador('Catjam', 23, 17, 'MEI', 'catjam.avif'),
+    new Jogador('Hackermans', 29, 4, 'ZAG', 'hackermans.avif'),
+    new Jogador('Benzema', 38, 9, 'ATA', 'benzema.jpg'),
+    new Jogador('Kahn', 56, 1, 'GOL', 'kahn.jpg'),
+    new Jogador('Pelé', 82, 10, 'ATA', 'rei.jpg'),
+    new Jogador('Buffon', 47, 1, 'GOL', 'buffon.jpg'),
+    new Jogador('Roberto Carlos', 52, 6, 'LAT', 'r6.jpg'),
+    new Jogador('Taffarel', 59, 12, 'GOL', 'taffarel.jpg'),
+    new Jogador('Maradona', 63, 10, 'MEI', 'maradona.jpg'),
   ];
 
-  // Posições disponíveis
   posicoes: string[] = ['GOL', 'ATA', 'LAT', 'MEI', 'ZAG'];
 
-  // Selecionar posição
-  selecionarPosicao(posicao: string) {
-    this.posicaoSelecionada = posicao;
+  togglePosicao(posicao: string) {
+    if (this.posicoesSelecionadas.includes(posicao)) {
+      this.posicoesSelecionadas = this.posicoesSelecionadas.filter(
+        (p) => p !== posicao
+      );
+    } else {
+      this.posicoesSelecionadas.push(posicao);
+    }
   }
 
-  // Buscar jogadores filtrados
   buscarJogadores(): Jogador[] {
-    return this.todosJogadores.filter((jogador) => {
-      // Filtra por nome
-      const filtroNome =
+    return this.jogadores.filter((jogador) => {
+      const passaNome =
         this.textoBusca === '' ||
         jogador.nome.toLowerCase().includes(this.textoBusca.toLowerCase());
 
-      // Filtra por posição
-      const filtroPosicao = jogador.posicao === this.posicaoSelecionada;
+      const passaPosicao =
+        this.posicoesSelecionadas.length === 0 ||
+        this.posicoesSelecionadas.includes(jogador.posicao);
 
-      // Remove jogadores já escalados
-      const naoEscalado = !this.jogadoresEscalados.find(
-        (j) => j.id === jogador.id
-      );
+      const naoEscalado = !this.jogadoresEscalados.includes(jogador);
 
-      return filtroNome && filtroPosicao && naoEscalado;
+      return passaNome && passaPosicao && naoEscalado;
     });
   }
 
-  // Escalar jogador
   escalarJogador(jogador: Jogador) {
     this.jogadoresEscalados.push(jogador);
   }
 
-  // Remover jogador
   removerJogador(jogador: Jogador) {
     this.jogadoresEscalados = this.jogadoresEscalados.filter(
-      (j) => j.id !== jogador.id
+      (j) => j !== jogador
     );
   }
 }

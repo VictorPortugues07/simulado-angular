@@ -8,7 +8,6 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class Card {
   @Input() nome!: string;
-  @Input() nomeCurto!: string;
   @Input() idade!: number;
   @Input() posicao!: string;
   @Input() numero!: number;

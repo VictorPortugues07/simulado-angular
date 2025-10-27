@@ -1,0 +1,17 @@
+a {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+}
+a:hover {
+  color: rgb(192, 187, 187);
+}
+nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background-color: #2e8fde;
+  padding: 10px 20px;
+}
+img {
+  height: 40px;
+}
